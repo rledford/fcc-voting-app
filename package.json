@@ -1,0 +1,39 @@
+{
+  "name": "voting_app",
+  "version": "1.0.0",
+  "description": "freeCodeCamp Voting App project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rledford/fcc-voting-app.git"
+  },
+  "author": "Ryan Ledford",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rledford/fcc-voting-app/issues"
+  },
+  "homepage": "https://github.com/rledford/fcc-voting-app#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "chart.js": "^2.3.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^1.2.0",
+    "ejs": "^2.5.2",
+    "express": "^4.12.4",
+    "express-session": "^1.11.3",
+    "mongoose": "^4.1.0",
+    "morgan": "^1.7.0",
+    "passport": "^0.3.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}

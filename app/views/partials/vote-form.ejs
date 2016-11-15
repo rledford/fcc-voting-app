@@ -1,0 +1,25 @@
+<!-- some elements include class styles from Bootstrap 3 -->
+
+<div class='form-group'>
+   <form class='form' name='voteSelection' method='post' action='/poll/vote'>
+      <input type='hidden' value=<%= poll._id %> name='pollId'>
+      <input type='hidden' value=<%= poll.choices.length %> name='customVoteIndex'>
+      <% poll.choices.forEach( function (choice, index) { %>
+         <% labels.push(choice.choice); %>
+         <% data.push(choice.votes); %>
+         <div>
+            <label class='radio-inline text-uppercase'>
+            <input type='radio' class='radio' <%if (index === 0){ %> checked='checked' <% } %> value=<%= index %> name='voteIndex'> <%= choice.choice %>
+            </label>
+         </div>
+      <% }); %>
+      <div>
+         <label class='radio-inline'>
+            <input type='radio' class='radio' value=<%= poll.choices.length %> name='voteIndex'> <input type='text' class='form-control' name='customVote'>
+            <span class='help-block'>Add a new item to vote for</span>
+         </label>
+         <br />
+         <input class='btn btn-primary' type='submit' value='Vote' >
+      </div>
+   </form>
+</div>

@@ -1,0 +1,32 @@
+<!-- the nav bar requires Bootstrap 3x -->
+
+<!-- START NAVIGATION BAR -->
+
+<nav class='navbar navbar-default navbar-static-top'>
+   <div class='container-fluid'>
+      <div class='navbar-header'>
+         <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='fcc-vote-navbar' aria-expanded='false'>
+            <span class='sr-only'>Toggle navigation</span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+         </button>
+         <a class='navbar-brand' href='/'>VoteFCC</a>
+      </div>
+      <div class='collapse navbar-collapse' id = 'fcc-vote-navbar'>
+         <ul class='nav navbar-nav'>
+            <li><a href='/polls'>Polls</a></li>
+         </ul>
+         <ul class='nav navbar-nav navbar-right'>
+            <% if (typeof user == 'undefined') { %>
+               <li><a href='/signin'>Sign In</a></li>
+               <% } else { %>
+               <li><a href='/profile'><b><%= user.firstName %></b></a></li>
+               <li><a href='/logout'>Sign Out</a></li>
+               <% } %>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+<!-- END NAVIGATION BAR -->

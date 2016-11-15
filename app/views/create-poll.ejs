@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+   <%- include('./partials/head.ejs') %>
+   <body class='container'>
+   <%- include('./partials/navbar.ejs') %>
+   <div class='jumbotron text-center'>
+      <h3>Create a New Poll</h3>
+      <div class='text-muted'>You can access, manage, and share your polls from your profile page.</div>
+   </div>
+   <% if(message.length > 0) { %>
+      <div class='alert alert-danger text-center'><%= message %></div>
+   <% } %>
+   <div class='row'>
+      <div class='col-md-6 col-md-offset-3'>
+         <form class='form' method='post' action'/create-poll'>
+            <div class='form-group text-center'>
+               <input class='form-control input-lg text-center' type='text' id='title' name='title' placeholder='Title'>
+               <small class='form-text'>The <b>title</b> does not have to be unique but it <b>is required</b> to create a new poll.<small>
+               <br />
+            </div>
+            <div>
+              <button class='btn' type='button' onclick='onClickAddChoice()'><i class='fa fa-plus'></i> Choice</button>
+            </div>
+            <div class='form-group' id='vote-choices'>
+               <br />
+            </div>
+            <br />
+            <div class='form-group'>
+               <div>
+                  <button class='btn btn-primary' type='submit'>Create</button>
+                  <button class='btn ' type='button'>Cancel</button>
+               </div>
+         </form>
+      </div>
+   </div>
+   <%- include('./partials/jq-bootstrap.ejs') %>
+   <script type='text/javascript'>
+      var choiceCount=0;
+      $('#title').focus();
+      function onClickAddChoice(){
+         $('#vote-choices').append(
+            "<input id='choiceIndex"+choiceCount+"' class='form-control' style='margin-bottom: 5px' type='text' name='choice"+choiceCount+"' placeholder='Leave blank to not use'>"
+            );
+         $('#choiceIndex'+choiceCount).focus();
+         choiceCount++;
+      }
+   </script>
+   </body>
+</html>

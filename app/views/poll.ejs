@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+   <%- include('./partials/head.ejs') %>
+   <body class='container'>
+
+      <!-- INSERT NAV BAR -->
+      <%- include('./partials/navbar.ejs'); %>
+
+      <div class='row'>
+         <h1 class='text-center' ><%= poll.title %></h1>
+      </div>
+
+      <% if (message.length > 0) { %>
+         <div class='alert alert-warning'><%= message %></div>
+      <% } %>
+
+      <div class='row'>
+         <div class='col-md-6'>
+            <!-- INSERT VOTE FORM -->
+            <%- include('./partials/vote-form.ejs') %>
+         </div>
+         <div class='col-md-6'>
+            <canvas id='pollChart' width=100 height=100></canvas>
+         </div>
+         <!-- ICON LINKS TO PROFILES ON GITHUB, FREECODECAMP, etc -->
+         <div>
+            <a href='https://github.com/rledford' target='_blank'><i class='fa fa-github fa-2x'></i></a>
+            <a href='https://www.freecodecamp.com/rledford' target='_blank'><i class='fa fa-free-code-camp fa-2x'></i></a>
+         </div>
+      </div>
+
+      <%- include('./partials/jq-bootstrap.ejs') %>
+      <!-- INSERT CHART -->
+      <%- include('./partials/vote-chart-script.ejs') %>
+
+   </body>
+</html >
