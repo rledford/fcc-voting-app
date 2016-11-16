@@ -8,11 +8,13 @@ exports.getPollById = function (req, res, next, pollId) {
    //request as req.poll = obj
 
    Poll.findById(pollId, function (err, item){
+      console.log('finding poll by id');
       if (err){
          console.log(err);
          res.send(err);
       } else {
          if (item){
+            console.log(item);
             req.poll = item;
          } else {
             console.log('no poll id match found');
@@ -20,27 +22,6 @@ exports.getPollById = function (req, res, next, pollId) {
          next();
       }
    });
-};
-
-exports.parsePollBody = function (req ,res, next){
-   //this middleware should appear before any POST
-   //method request to the /api/polls API
-   //http://stackoverflow.com/questions/4295782/how-do-you-extract-post-data-in-node-js
-   if (req.method === 'POST'){
-      var body = '';
-      req.on('data', function (data) {
-         body += data;
-         if (body.length > 1e6){
-            //destroy the connection if POST data is too large (1e6 ~ 1MB)
-            req.connection.destroy();
-            next();
-         }
-      });
-      req.on('end', function () {
-         req.body = querystring.parse(body);
-         next();
-      });
-   }
 };
 
 exports.votePoll = function (req, res) {
@@ -88,18 +69,6 @@ exports.getAllPollsList = function (req, res, next){
       }
       req.allPolls = polls;
       next();
-   });
-};
-
-exports.getPollList = function (req, res) {
-   //should be called on GET
-   Poll.find({}, function (err, polls){
-      if (err){
-         console.log(err);
-         res.send(err);
-      } else{
-         res.json(polls);
-      }
    });
 };
 

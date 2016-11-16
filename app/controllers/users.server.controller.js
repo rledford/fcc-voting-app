@@ -18,22 +18,55 @@ exports.renderPoll = function(req, res){
    res.render('poll', {message: req.flash('pollMessage')});
 };
 
-exports.readUserId = function(req, res, next, userId){
-   req.userId = userId;
-   next();
-};
-
-exports.readPollId = function(req, res, next, pollId){
-   req.pollId = pollId;
+exports.readUsername = function(req, res, next, username){
+   req.username = username;
    next();
 };
 
 exports.renderCreatePoll = function(req, res){
-   if (req.user && req.userId && req.user.id == req.userId){
+   if (req.user){
       res.render('create-poll', {user: req.user, message: req.flash('pollMessage')});
    } else {
       res.redirect('/signin');
    }
+};
+
+exports.createUser = function(req, res, next){
+   //should only be called for post requests
+   console.log('processing create user request');
+   var fname = req.body.firstName,
+      lname = req.body.lastName,
+      email = req.body.email,
+      username = req.body.username,
+      pw = req.body.password,
+      pwConfirm = req.body.confirmPassword;
+
+   if (pw !== pwConfirm){
+      req.flash('signupMessage', 'The passwords you provided do not match');
+      return res.redirect('/signup');
+   }
+   
+   User.findOne({username: username}, function(err, user){
+      if(err){
+         req.flash('signupMessage', err);
+         return res.redirect('/signup');
+      }
+
+      if (user !== null){
+         req.flash('signupMessage', 'The Username is not available');
+         return res.redirect('/signup');
+      }
+
+      var newUser = new User();
+      newUser.firstName = fname;
+      newUser.lastName = lname;
+      newUser.email = email;
+      newUser.username = username;
+      newUser.password = pw;
+      newUser.save();
+      req.flash('signinMessage', 'Thank you for registering. Please sign in.');
+      next();
+   });
 };
 
 exports.createPoll = function(req, res) {
@@ -42,7 +75,7 @@ exports.createPoll = function(req, res) {
       res.redirect('/signin');
    }
 
-   var createPollRedirect = '/'+req.user.id+'/create-poll';
+   var createPollRedirect = '/'+req.user.username+'/create-poll';
 
    if (req.body.title.replace(/\s/g,'').length === 0){
       req.flash('pollMessage', 'You must provide a title.');
@@ -54,7 +87,7 @@ exports.createPoll = function(req, res) {
          //check to make sure the choice exists
          if(req.body[choice+i] !== undefined){
             //make sure the choice contains text
-            if(req.body[choice+i].replace(/\s/g, '') > 0){
+            if(req.body[choice+i].replace(/\s/g, '').length > 0){
                //add it to the choices array
                choices.push({'choice': req.body[choice+i], 'votes': 0});
             }
@@ -64,6 +97,7 @@ exports.createPoll = function(req, res) {
             break;
          }
       }
+      console.log('CHOICE: '+choices);
       poll.title = req.body.title;
       poll.choices = choices;
       poll.save( function(err) {
@@ -80,15 +114,30 @@ exports.createPoll = function(req, res) {
             else {
                console.log('linked user to poll');
             }
-            res.redirect('/profile');
+            res.redirect('/'+req.user.username+'/profile');
          });
       });
    }
 };
 
 exports.deletePoll = function(req, res){
-   console.log('deleting: '+req.body.pollId);
-   res.redirect('/profile');
+   if (req.user){
+      console.log('deleting: '+req.body.pollId);
+      Poll.remove({_id: req.body.pollId}, function(err){
+         if(err){
+            req.flash('profileMessage', 'Unable to delete poll: '+req.body.pollId);
+         } else {
+            req.user.pollsOwned.splice(req.user.pollsOwned.indexOf(req.body.pollId), 1);
+            req.user.save(function(err){
+               req.flash('profileMessage', err);
+            });
+         }
+         res.redirect('/'+req.user.username+'/profile');
+      });
+   } else {
+      req.flash('signinMessage', 'Please sign in to manage your polls.');
+      res.redirect('/signin');
+   }
 };
 
 exports.sharePoll = function(req, res){

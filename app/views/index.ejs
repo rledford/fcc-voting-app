@@ -4,14 +4,41 @@
    <body class='container'>
       <%- include('./partials/navbar.ejs') %>
       <div class='jumbotron text-center'>
-         <h2>Welcom to the freeCodeCamp Voting App</h2>
+         <h2>Welcom to VoteFCC</h2>
       </div>
       <div class='row'>
          <div class='col-sm-6'>
-            <p>This app was written for the freeCodeCamp Voting App project and is written using Mongo[ose], Express 4, and Node.</p>
+            <h3 class='text-center'>Some Things I Learned Along the Way</h3>
+            <p>This app was written for the freeCodeCamp Voting App project and was written using Mongo[ose], Express 4, and Node. It is deployed on Heroku and connects to mLab which hosts my Mongo database.</p>
+            <p>I have learned a lot while creating this web application and have plans to better structure and implement my next project, the Nightlife Coordination App. For anyone possibly reading this and are just getting into the MEAN stack, here are some key points I took away from this project.</p>
+            <ul>
+               <li>Read the documentation for anything you are going to use in your project.</li>
+               <li>Practice... a lot. I went through the ClementineJS tutorials a couple times. I took notes on what I was doing so that I could look back to them when I wasn't sure what to do next. I then wrote the skeleton of this project 3 times and refined my notes. I started this project with a good handle on Node, Express, and Mongoose. When I got to the point where I needed to implement Passport I spent a day or two reading there documentation and doing tutorials on Scotch.io and some other sites. The examples on the Passport website are great. That's where most of my time was spent reading. I ended up not using ClementineJS as a boilerplate because I didn't like the way the folders were set up and how files were named.</li>
+               <li>Here are some Node modules I didn't start my project with but I definitely should have.
+                  <ul>
+                     <li>Dotenv - Loads anything in a .env file and makes the variables available through process.env - This is useful when needing to hide API keys and such. Adding the .env file name to your .gitignore file will prevent it from being added to your repository.
+                     <li>Flash - Once I figured out how it actually works this was awesome for showing messages on my EJS pages.</li>
+                     <li>Body-Parser - I implemented my own request body parser before using body-parser. It's much easier to just use body-parser.</li>
+                     <li>Morgan - Great for logging activity to the console.</li>
+                     <li>Nodemon - I was getting pretty tired of Alt-Tabbing or swipping to another desktop where my cosole was running so that I could call 'node server.js' every time I made a change to my project that I wanted to test. Now I just let Nodemon restart Node anytime it detects a change to resources in my project that I've configured it to watch for.</li>
+                  </ul>
+               <li>Learn how to use and implement the MVC structure.</li>
+               <li>Plan an API first before jumping right into making controllers and routes. I spent a lot of time writing the controllers for this app, and once the project was almost complete, I reallized some of my controller functions should have been implemented as an API for more convenient access and better organization. I was too far into this project to find it worth reworking a lot of my routes etc.</li>
+               <li>Embedded JavaScript saved me a ton of time especially when I started creating and using 'partials'.</li>
+               <li>Mongoose models made interacting with my MongoDB a lot easier. There are some neat things you can do. One thing I learned toward the end of my project was that you can create a new instance of your model and assign to it values directly using dot notation and then just use the inherited Model.save method and it will update the database. This is a bit easier than calling Model.update({field: value}, {}, callback(err, doc)).</li>
+               <li>I also learned, that even though I've gotten my Front End Development Certification from FreeCodeCamp, I still need a lot of practice making front ends. Good thing this project is for my backend cert ;) .</li>
+            </ul>
          </div>
          <div class='col-sm-6'>
-            <p>Take a look around and view/vote on some <a href='#'>polls</a>. If you'd like to create a poll, please <a href='#'>Sign Up</a> or <a href='#'>Sign In</a> to get started.</p>
+            <h3 class='text-center'>Thanks for Visiting</h3>
+            <p>Take a look around and view/vote on some <a href='/polls'>polls</a>. If you'd like to create a poll, please <a href='/signup'>Sign Up</a> or <a href='/signin'>Sign In</a> to get started.</p>
+            <p>Thank you for visiting. Check me out.</p>
+            <div>
+               <a target='_blank' href='https://www.freecodecamp.com/rledford'><i class='fa fa-free-code-camp fa-2x'></i></a>
+               <a target='_blank' href='https://www.github.com/rledford'><i class='fa fa-github fa-2x'></i></a>
+               <a target='_blank' href='https://www.codepen.io/rledford'><i class='fa fa-codepen fa-2x'></i></a>
+               <a target='_blank' href='https://www.linkedin.com/in/ryan-ledford-356944124'><i class='fa fa-linkedin fa-2x'></i></a>
+            </div>
          </div>
       </div>
       <%- include('./partials/jq-bootstrap.ejs') %>

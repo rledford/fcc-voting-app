@@ -12,9 +12,6 @@ module.exports = function (app, passport) {
       res.render('all-polls.ejs', {user: req.user, allPolls: req.allPolls, message: req.flash('pollMessage')});
    });
 
-   app.route('/api/v1/polls')
-      .get(pollController.getPollList);
-
    app.route('/poll/vote')
       .post(pollController.votePoll);
 

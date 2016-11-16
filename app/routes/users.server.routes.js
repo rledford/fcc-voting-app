@@ -4,20 +4,33 @@ module.exports = function(app, passport){
    app.route('/signin')
       .get(users.renderSignin)
       .post(passport.authenticate('local', {
-         successRedirect: '/profile',
+         successRedirect: '/goto-profile',
          failureRedirect: '/signin',
          failureFlash: true
       }));
 
    app.route('/signup')
-      .get(users.renderSignup);
+      .get(users.renderSignup)
+      .post(users.createUser, users.renderProfile);
 
-   app.route('/profile')
+   app.route('/:userId/profile')
       .get(users.mapPollIdToTitle, users.renderProfile);
 
-   app.route('/:userId/create-poll')
+   app.get('/goto-profile', function(req, res){
+      if (!req.user){
+         req.flash('signinMessage', 'Please sign in to view your profile.');
+         res.redirect('/signin');
+      } else {
+         res.redirect('/'+req.user.username+'/profile');
+      }
+   });
+
+   app.route('/:username/create-poll')
       .get(users.renderCreatePoll)
       .post(users.createPoll);
+
+   app.route('/:username/delete-poll')
+      .post(users.deletePoll);
 
    app.route('/delete-poll')
       .post(users.deletePoll);
@@ -27,5 +40,5 @@ module.exports = function(app, passport){
       res.redirect('/');
    });
 
-   app.param('userId', users.readUserId);
+   app.param('username', users.readUsername);
 };

@@ -21,7 +21,7 @@
             <% if (typeof user == 'undefined') { %>
                <li><a href='/signin'>Sign In</a></li>
                <% } else { %>
-               <li><a href='/profile'><b><%= user.firstName %></b></a></li>
+               <li><a href='/<%= user.username %>/profile'><i class='fa fa-user'></i> <b><%= user.firstName %></b></a></li>
                <li><a href='/logout'>Sign Out</a></li>
                <% } %>
          </ul>
